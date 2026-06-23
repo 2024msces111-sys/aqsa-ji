@@ -190,11 +190,12 @@
 
 </body>
 <script>
+document.addEventListener('DOMContentLoaded', function () {
     let datetxt = "5th JULY";
 
     // Use template literal so newlines and quotes are safely included
     let datatxtletter = `Happy Birthday, my Flying Jutt ❤️
-Seven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my companion through thick and thin. On your special day, I just want you to know: you make the world softer and brighter just by being in it. May this new year spoil you with all the happiness you truly deserve.
+Seven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my companion through thick and th[...]
 Happy Birthday again — this one's for my favorite girl. 🎂❤️`;
 
     let titleLetter = "To you";
@@ -207,90 +208,124 @@ Happy Birthday again — this one's for my favorite girl. 🎂❤️`;
     let date__of__birth = document.querySelector(".date__of__birth span");
     let text__letter = document.querySelector(".text__letter p");
 
+    // Start the date animation after 1s (was 12s) — change if you want a different delay
     setTimeout(function () {
-        timeDatetxt = setInterval(function () {
+        let timeDatetxt = setInterval(function () {
             if (currentIndex < charArrDate.length) {
-                date__of__birth.textContent += charArrDate[currentIndex];
+                if (date__of__birth) date__of__birth.textContent += charArrDate[currentIndex];
                 currentIndex++;
-            }
-            else {
+            } else {
+                // add star icons at both ends
                 let i = document.createElement("i");
-                i.className = "fa-solid fa-star"
-                document.querySelector(".date__of__birth").prepend(i)
-                document.querySelector(".date__of__birth").appendChild(i.cloneNode(true))
-                clearInterval(timeDatetxt)
+                i.className = "fa-solid fa-star";
+                let container = document.querySelector(".date__of__birth");
+                if (container) {
+                    container.prepend(i);
+                    container.appendChild(i.cloneNode(true));
+                }
+                clearInterval(timeDatetxt);
             }
-        }, 100)
-    }, 12000)
+        }, 100);
+    }, 1000);
 
-    var intervalContent;
-    var intervalTitle;
+    let intervalContent;
+    let intervalTitle;
 
-    // Letter popup: show letter modal and animate title/content
-    $("#btn__letter").on("click", function () {
-        $(".box__letter").slideDown()
-        setTimeout(function () {
-            $(".letter__border").slideDown();
-        }, 1000)
-        setTimeout(function () {
-            intervalTitle = setInterval(function () {
-                if (currentIndexTitle < charArrTitle.length) {
-                    document.querySelector(".title__letter").textContent += charArrTitle[currentIndexTitle];
-                    let i = document.createElement("i");
-                    i.className = "fa-solid fa-heart"
-                    document.querySelector(".title__letter").appendChild(i)
-                    currentIndexTitle++;
-                }
-                else {
-                    clearInterval(intervalTitle)
-                }
-            }, 100)
-        }, 2000)
-        setTimeout(function () {
-            document.querySelector("#image__55").classList.add("animationOp");
-            document.querySelector("#mewmew").classList.add("animationOp");
-        }, 2800)
-        setTimeout(function () {
+    // Helper to show/hide elements safely
+    function show(el) { if (el) el.style.display = 'block'; }
+    function hide(el) { if (el) el.style.display = 'none'; }
+
+    // Button click: show letter modal and animate title/content
+    const btnLetter = document.getElementById("btn__letter");
+    const boxLetter = document.querySelector(".box__letter");
+    const letterBorder = document.querySelector(".letter__border");
+    const image55 = document.getElementById("image__55");
+    const mewmew = document.getElementById("mewmew");
+
+    if (btnLetter) {
+        btnLetter.addEventListener('click', function () {
+            show(boxLetter);
+            // show border after a short delay
+            setTimeout(function () { show(letterBorder); }, 1000);
+
+            // title typing
+            setTimeout(function () {
+                intervalTitle = setInterval(function () {
+                    if (currentIndexTitle < charArrTitle.length) {
+                        const titleEl = document.querySelector(".title__letter");
+                        if (titleEl) {
+                            titleEl.textContent += charArrTitle[currentIndexTitle];
+                            let i = document.createElement("i");
+                            i.className = "fa-solid fa-heart";
+                            titleEl.appendChild(i);
+                        }
+                        currentIndexTitle++;
+                    } else {
+                        clearInterval(intervalTitle);
+                    }
+                }, 100);
+            }, 2000);
+
+            // add small image animations
+            setTimeout(function () {
+                if (image55) image55.classList.add("animationOp");
+                if (mewmew) mewmew.classList.add("animationOp");
+            }, 2800);
+
+            // heart animations
+            setTimeout(function () {
+                document.querySelectorAll(".heart").forEach((item) => {
+                    item.classList.add("animation");
+                });
+            }, 3500);
+
+            // letter content typing
+            setTimeout(function () {
+                intervalContent = setInterval(function () {
+                    if (currentIndexLetter < charArrDateLetter.length) {
+                        if (text__letter) text__letter.textContent += charArrDateLetter[currentIndexLetter];
+                        currentIndexLetter++;
+                    } else {
+                        clearInterval(intervalContent);
+                    }
+                }, 50);
+            }, 6000);
+
+            // show the boxMail popup (simple show)
+            const boxMail = document.querySelector(".boxMail");
+            show(boxMail);
+        });
+    }
+
+    // Close letter (the .close button in modal)
+    const closeBtn = document.querySelector(".letter__border .close, .close");
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            clearInterval(intervalContent);
+            const titleEl = document.querySelector(".title__letter");
+            if (titleEl) titleEl.textContent = "";
+            if (text__letter) text__letter.textContent = "";
+            currentIndexLetter = 0;
+            currentIndexTitle = 0;
+            if (image55) image55.classList.remove("animationOp");
+            if (mewmew) mewmew.classList.remove("animationOp");
             document.querySelectorAll(".heart").forEach((item) => {
-                item.classList.add("animation")
-            })
-        }, 3500)
-        setTimeout(function () {
-            intervalContent = setInterval(function () {
-                if (currentIndexLetter < charArrDateLetter.length) {
-                    text__letter.textContent += charArrDateLetter[currentIndexLetter];
-                    currentIndexLetter++;
-                }
-                else {
-                    clearInterval(intervalContent)
-                }
-            }, 50)
-        }, 6000)
-
-        // Also show the .boxMail card popup (optional): fade in
-        $(".boxMail").fadeIn();
-    })
-
-    // Close letter
-    $(".close").on("click", function () {
-        clearInterval(intervalContent)
-        document.querySelector(".title__letter").textContent = "";
-        text__letter.textContent = "";
-        currentIndexLetter = 0
-        currentIndexTitle = 0
-        document.querySelector("#image__55").classList.remove("animationOp");
-        document.querySelector("#mewmew").classList.remove("animationOp");
-        document.querySelectorAll(".heart").forEach((item) => {
-            item.classList.remove("animation")
-        })
-        $(".box__letter").slideUp();
-        $(".letter__border").slideUp();
-    })
+                item.classList.remove("animation");
+            });
+            hide(boxLetter);
+            hide(letterBorder);
+        });
+    }
 
     // Close .boxMail when its close icon (direct child .boxMail > i) is clicked
-    $(".boxMail > i.fa-xmark").on("click", function () {
-        $(".boxMail").fadeOut();
-    });
+    const boxMailClose = document.querySelector(".boxMail > i.fa-xmark");
+    const boxMailEl = document.querySelector(".boxMail");
+    if (boxMailClose) {
+        boxMailClose.addEventListener('click', function () {
+            hide(boxMailEl);
+        });
+    }
+});
 </script>
 
 </html>
