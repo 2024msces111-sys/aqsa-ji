@@ -132,7 +132,6 @@
                     <div class="content__letter">
                         <div class="left">
                             <img id="image__55" class="image__frame" src="./images/55.png" alt="Image 55">
-                            <img id="heart__letter" src="./images/combined.png" alt="">
                             <div class="heart heart_1">
                                 <i class="fa-solid fa-heart"></i>
                             </div>
@@ -175,8 +174,8 @@
                     <div class="card2-content">
                         <h3>To You!</h3>
                         <h2>Happy Birthday, my Flying Jutt ❤️
-                        Seven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my loudest cheerleader, and my safest place all these years.
-                        On your special day, I just want you to know: you make the world softer and brighter just by being in it. May this new year spoil you with all the happiness you truly deserve, the kind that makes your eyes shine and your heart feel full. Keep shining, You beautiful soul.
+                        Seven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my l[...]
+                        On your special day, I just want you to know: you make the world softer and brighter just by being in it. May this new year spoil you with all the happiness you truly dese[...]
                         Happy Birthday again — this one's for my favorite girl. 🎂❤️
                         </h2>
 
@@ -192,7 +191,7 @@
 </body>
 <script>
     let datetxt = "5th JULY";
-    let datatxtletter = "Happy Birthday, my Flying Jutt ❤️\nSeven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my loudest cheerleader, and the one who makes my bad days good. Thank you for being YOU!\n\nOn your special day, I just want you to know: you make the world softer and brighter just by being in it. May this new year spoil you with all the happiness you truly deserve, the kind that makes your smile even wider.\n\nHappy Birthday again — this one's for my favorite girl. 🎂❤️";
+    let datatxtletter = "Happy Birthday, my Flying Jutt ❤️\nSeven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my bigges[...]
     let titleLetter = "To you";
     let charArrDate = datetxt.split('');
     let charArrDateLetter = datatxtletter.split('');
@@ -242,7 +241,6 @@
         }, 2000)
         setTimeout(function () {
             document.querySelector("#image__55").classList.add("animationOp");
-            document.querySelector("#heart__letter").classList.add("animationOp");
             document.querySelector("#mewmew").classList.add("animationOp");
         }, 2800)
         setTimeout(function () {
@@ -270,7 +268,6 @@
         currentIndexLetter = 0
         currentIndexTitle = 0
         document.querySelector("#image__55").classList.remove("animationOp");
-        document.querySelector("#heart__letter").classList.remove("animationOp");
         document.querySelector("#mewmew").classList.remove("animationOp");
         document.querySelectorAll(".heart").forEach((item) => {
             item.classList.remove("animation")
