@@ -191,7 +191,12 @@
 </body>
 <script>
     let datetxt = "5th JULY";
-    let datatxtletter = "Happy Birthday, my Flying Jutt ❤️\nSeven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my bigges[...]
+
+    // Use template literal so newlines and quotes are safely included
+    let datatxtletter = `Happy Birthday, my Flying Jutt ❤️
+Seven years ago we were just university batchmates, and today you're still my favorite person on this planet. You've been my biggest support, my late-night therapist, my companion through thick and thin. On your special day, I just want you to know: you make the world softer and brighter just by being in it. May this new year spoil you with all the happiness you truly deserve.
+Happy Birthday again — this one's for my favorite girl. 🎂❤️`;
+
     let titleLetter = "To you";
     let charArrDate = datetxt.split('');
     let charArrDateLetter = datatxtletter.split('');
@@ -201,7 +206,7 @@
     let currentIndexTitle = 0;
     let date__of__birth = document.querySelector(".date__of__birth span");
     let text__letter = document.querySelector(".text__letter p");
-    
+
     setTimeout(function () {
         timeDatetxt = setInterval(function () {
             if (currentIndex < charArrDate.length) {
@@ -220,6 +225,8 @@
 
     var intervalContent;
     var intervalTitle;
+
+    // Letter popup: show letter modal and animate title/content
     $("#btn__letter").on("click", function () {
         $(".box__letter").slideDown()
         setTimeout(function () {
@@ -259,8 +266,12 @@
                 }
             }, 50)
         }, 6000)
+
+        // Also show the .boxMail card popup (optional): fade in
+        $(".boxMail").fadeIn();
     })
-    
+
+    // Close letter
     $(".close").on("click", function () {
         clearInterval(intervalContent)
         document.querySelector(".title__letter").textContent = "";
@@ -275,6 +286,11 @@
         $(".box__letter").slideUp();
         $(".letter__border").slideUp();
     })
+
+    // Close .boxMail when its close icon (direct child .boxMail > i) is clicked
+    $(".boxMail > i.fa-xmark").on("click", function () {
+        $(".boxMail").fadeOut();
+    });
 </script>
 
 </html>
